@@ -1,0 +1,1 @@
+alter table users add enabled boolean not null default TRUE;
