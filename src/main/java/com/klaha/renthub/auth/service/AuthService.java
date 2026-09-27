@@ -23,11 +23,11 @@ public class AuthService {
     public AuthResponseDto register(RegisterRequestDto dto){
         String passwordHash=encoder.encode(dto.getPassword());
         User user =User.builder().email(dto.getEmail()).passwordHash(passwordHash)
-                .fisrtName(dto.getFirstName()).lastName(dto.getLastName()).role(Role.ROLE_USER).
+                .username(dto.getUsername()).lastName(dto.getLastName()).role(Role.ROLE_USER).
                 createdAt(LocalDateTime.now()).build();
         User saved=repository.save(user);
         return AuthResponseDto.builder().id(saved.getId()).email(saved.getEmail()).
-                firstName(saved.getFisrtName()).build();
+                username(saved.getUsername()).build();
 
     }
     public AuthResponseDto login(AuthRequestDto dto){
@@ -37,7 +37,7 @@ public class AuthService {
             throw new AuthenticationCredentialsException("Неверный пароль");
         }
         return AuthResponseDto.builder().id(user.getId()).email(dto.getEmail()).
-                firstName(user.getFisrtName()).build();
+                username(user.getUsername()).build();
 
     }
 

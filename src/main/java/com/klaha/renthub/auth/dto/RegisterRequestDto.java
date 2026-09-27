@@ -20,10 +20,13 @@ public class RegisterRequestDto {
     @NotBlank(message = "пароль не может быть пустым")
     @Size(max=64,message = "пароль слишком длинный")
     private String password;
+    @NotBlank(message = "введите никнейм")
+    @Size(max=32,message = "Никнейм слишком длинный")
+    private String username;
     @NotBlank(message = "заполните имя")
-    @Size(max=40,message = "Имя слмшкмо длинное")
+    @Size(max=64,message = "Имя слишком длинное")
     private String firstName;
-    @Size(max=40,message = "Фамилия слишком длинная")
+    @Size(max=64,message = "Фамилия слишком длинная")
     private String lastName;
 
 }
