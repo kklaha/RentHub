@@ -1,4 +1,8 @@
 package com.klaha.renthub.exception;
 
-public class JwtAuthenticationException {
+
+import org.springframework.security.core.AuthenticationException;
+
+public class JwtAuthenticationException extends AuthenticationException {
+
 }
