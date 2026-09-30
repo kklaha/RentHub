@@ -1,7 +1,6 @@
 package com.klaha.renthub.auth.service;
 
 import com.klaha.renthub.auth.repository.AuthRepository;
-import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustmoUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
     private final AuthRepository repository;
     @Override
     public @NonNull UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException{
