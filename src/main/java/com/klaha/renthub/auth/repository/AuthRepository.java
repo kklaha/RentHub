@@ -1,4 +1,4 @@
-package com.klaha.renthub.auth.repository.jpa;
+package com.klaha.renthub.auth.repository;
 
 import com.klaha.renthub.auth.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
