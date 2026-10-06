@@ -1,9 +1,7 @@
-package com.klaha.renthub.auth.repository;
+package com.klaha.renthub.auth.repository.jpa;
 
 import com.klaha.renthub.auth.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
