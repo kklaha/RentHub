@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+//TODO : add XSS defend withc cookies
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
@@ -22,11 +22,12 @@ public class RefreshTokenService {
         return RefreshToken.builder().token(UUID.randomUUID().toString()).
                 userId(userID).expTime(refreshExpirationMs).build();
     }
+
     public void deleteByToken(String token){
         repository.deleteById(token);
     }
     public void deleteAllByUserId(String userId){
-        repository.deleteUserById(userId);
+        repository.deleteByUserId(userId);
     }
     public RefreshToken rotateToken(String token){
         RefreshToken oldToken=repository.findByUseryId(token).

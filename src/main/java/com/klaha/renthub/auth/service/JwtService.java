@@ -2,6 +2,7 @@ package com.klaha.renthub.auth.service;
 
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,14 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-//TODO: refactor this with following updates in architecture
 @Service
 @RequiredArgsConstructor
 public class JwtService {
 
-    @Value("?{jwt.secret}")
+    @Value("${jwt.secret}")
     private String secretKey;
-    @Value("?{jwt.expiration")
+    @Value("${jwt.access-token-ttl}")
     private long expirationMs;
 
     public String buildToken(Map<String,Object> extraClaims,
@@ -66,9 +66,16 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
-        final String username=extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    public boolean isTokenValid(String token){
+        try {
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
     public SecretKey getSigningKey(){
         byte[] keyBytes= Decoders.BASE64.decode(secretKey);

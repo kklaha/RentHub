@@ -1,6 +1,7 @@
 package com.klaha.renthub.auth.dto;
 
 
+import jakarta.validation.Valid;
 import lombok.*;
 
 
@@ -12,7 +13,8 @@ import lombok.*;
 public class AuthResponseDto {
 
 
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private Long id;
     private String email;
     private  String username;

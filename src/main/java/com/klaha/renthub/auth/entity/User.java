@@ -20,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,7 @@ public class User implements UserDetails{
 
     @Override
     public @NonNull String getUsername(){
-        return this.email;
+        return this.username;
     }
     @Override
     public @NonNull String getPassword(){
