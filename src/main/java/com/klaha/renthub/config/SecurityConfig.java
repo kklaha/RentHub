@@ -38,10 +38,12 @@ public class SecurityConfig {
         CorsConfiguration config=new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:3000","https://renthub.space"));
         config.setAllowedMethods(List.of("GET","POST","PATCH","DELETE","PUT","OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        config.setAllowCredentials(true);
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",config);
+        source.registerCorsConfiguration("/api/**",config);
         return source;
     }
    @Bean
@@ -49,8 +51,10 @@ public class SecurityConfig {
         http.cors(cors->
                         cors.configurationSource(corsConfigurationSource())).
                 authorizeHttpRequests(auth->
-                auth.requestMatchers("api/v1/login").permitAll().
-                        requestMatchers("apit/v1/register").permitAll()).
+                auth.requestMatchers("/api/v1/auth/login").permitAll()
+                                .requestMatchers("/api/v1/auth/register").permitAll()
+                                .requestMatchers("/api/v1/auth/refresh").permitAll()
+                                .anyRequest().authenticated()).
                 sessionManagement(session->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
                 csrf(AbstractHttpConfigurer::disable).addFilterBefore(jwtAuthenticationFilter,
@@ -61,7 +65,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder(){
-        return new BCryptPasswordEncoder(15);
+        return new BCryptPasswordEncoder(12);
     }
 
 }
