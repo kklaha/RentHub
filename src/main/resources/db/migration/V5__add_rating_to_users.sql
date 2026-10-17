@@ -1,0 +1,1 @@
+alter table users add rating numeric(3,2) default 0.0;

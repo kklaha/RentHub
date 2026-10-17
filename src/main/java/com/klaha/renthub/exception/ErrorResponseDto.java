@@ -1,4 +1,4 @@
-package com.klaha.renthub.auth.dto;
+package com.klaha.renthub.exception;
 
 
 import lombok.*;
