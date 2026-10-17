@@ -7,6 +7,7 @@ import com.klaha.renthub.utils.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,4 @@ public class AuthController {
         response.addHeader(HttpHeaders.SET_COOKIE,utils.logoutRefreshTokenCookie().toString());
         return ResponseEntity.ok().build();
     }
-
 }

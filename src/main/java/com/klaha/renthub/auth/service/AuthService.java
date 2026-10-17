@@ -4,7 +4,7 @@ package com.klaha.renthub.auth.service;
 import com.klaha.renthub.auth.dto.*;
 import com.klaha.renthub.auth.entity.RefreshToken;
 import com.klaha.renthub.auth.entity.User;
-import com.klaha.renthub.auth.repository.AuthRepository;
+import com.klaha.renthub.auth.repository.UserRepository;
 import com.klaha.renthub.enums.Role;
 import com.klaha.renthub.exception.AuthenticationCredentialsException;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +22,11 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-    private final AuthRepository repository;
+    private final UserRepository repository;
     private final AuthenticationManager manager;
     private final PasswordEncoder encoder;
     private final RefreshTokenService tokenService;
-    private final UserDetailsService userService;
+    private final CustomUserDetailsService userService;
     private final JwtService jwtService;
 
 

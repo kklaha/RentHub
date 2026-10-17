@@ -24,9 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
     private final HandlerExceptionResolver resolver;
-    public JwtAuthenticationFilter(@Lazy JwtService jwtService,
-                                   @Lazy CustomUserDetailsService userDetailsService,
-                                   @Qualifier("handlerExceptionResolver")@Lazy
+    public JwtAuthenticationFilter(JwtService jwtService,
+                                   CustomUserDetailsService userDetailsService,
+                                   @Qualifier("handlerExceptionResolver")
                                    HandlerExceptionResolver resolver){
         this.jwtService=jwtService;
         this.userDetailsService=userDetailsService;
@@ -61,11 +61,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             }
-
+            filterChain.doFilter(request,response);
         }catch (Exception e){
             resolver.resolveException(request, response, null, e);
+
         }
-        filterChain.doFilter(request,response);
     }
 
 }
