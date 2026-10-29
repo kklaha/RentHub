@@ -7,6 +7,7 @@ import com.klaha.renthub.auth.entity.User;
 import com.klaha.renthub.auth.repository.UserRepository;
 import com.klaha.renthub.enums.Role;
 import com.klaha.renthub.exception.AuthenticationCredentialsException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +31,7 @@ public class AuthService {
     private final CustomUserDetailsService userService;
     private final JwtService jwtService;
 
-
+    @Transactional
     public AuthResult register(@NonNull RegisterRequestDto dto){
         if (repository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("Пользователь с таким email уже существуют");
@@ -41,7 +43,7 @@ public class AuthService {
         String passwordHash=encoder.encode(dto.getPassword());
         User user =User.builder().email(dto.getEmail()).passwordHash(passwordHash)
                 .username(dto.getUsername()).firstName(dto.getFirstName()).lastName(dto.getLastName()).role(Role.ROLE_USER).
-                createdAt(LocalDateTime.now()).build();
+                createdAt(OffsetDateTime.now()).build();
         User saved=repository.save(user);
         String accessToken=jwtService.generateToken(saved);
         RefreshToken refreshToken=tokenService.createRefreshToken(saved.getId().toString());
@@ -69,6 +71,9 @@ public class AuthService {
     public RefreshResult refresh(String oldRefreshToken){
         RefreshToken newToken=tokenService.rotateToken(oldRefreshToken);
         UserDetails userDetails=userService.loadUserByUsername(newToken.getUserId());
+        if (!userDetails.isEnabled()) {
+            throw new DisabledException("Пользователь заблокирован");
+        }
         String newAccessToken=jwtService.generateToken(userDetails);
         TokenResponseDto response= TokenResponseDto.builder().accessToken(newAccessToken).build();
         return new RefreshResult(response,newToken.getToken());

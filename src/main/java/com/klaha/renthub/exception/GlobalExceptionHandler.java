@@ -33,5 +33,30 @@ public class GlobalExceptionHandler {
                 timestamp(LocalDateTime.now()).build();
                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
+    @ExceptionHandler(ItemNotActiveException.class)
+    public ResponseEntity<ErrorResponseDto> handleItemNotActiveException
+            (ItemNotActiveException ex){
+        ErrorResponseDto error= ErrorResponseDto.builder().
+                status(HttpStatus.BAD_REQUEST.value()).
+                error("Item is inactive").message(ex.getMessage()).
+                timestamp(LocalDateTime.now()).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+    @ExceptionHandler(StatusException.class)
+    public ResponseEntity<ErrorResponseDto> handleStatusExcpetion
+            (StatusException ex){
+        ErrorResponseDto error=ErrorResponseDto.builder().
+                status(HttpStatus.METHOD_NOT_ALLOWED.value()).
+                error("Status can't be moved to this").
+                message(ex.getMessage()).timestamp(LocalDateTime.now()).build();
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
+    }
+    @ExceptionHandler(BussinesException.class)
+    public ResponseEntity<ErrorResponseDto> handleBussinesException(BussinesException ex){
+        ErrorResponseDto error = ErrorResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).
+                error("Item already ordered").message(ex.getMessage()).
+                timestamp(LocalDateTime.now()).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
 }
