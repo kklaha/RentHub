@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,8 +49,8 @@ public class User implements UserDetails{
     private boolean enabled=true;
     @CreationTimestamp
     @Column(name="createdAt",nullable = false,updatable = false)
-    private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
+    private OffsetDateTime createdAt;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Item> items=new ArrayList<>();
     @Override
     public @NonNull String getUsername(){
