@@ -1,13 +1,15 @@
 package com.klaha.renthub.items.entity;
 
 import com.klaha.renthub.auth.entity.User;
-import com.klaha.renthub.categories.entity.Category;
+import com.klaha.renthub.enums.Category;
 import com.klaha.renthub.enums.ItemStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name="items")
@@ -23,14 +25,15 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @Column(name="category")
+    @Enumerated(EnumType.STRING)
     private Category category;
+    @CreationTimestamp
     @Column(name="created_at")
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
     @Column(name="item_name",nullable = false,length = 255)
     private String itemName;
-    @Column(name="price",nullable = false)
+    @Column(name="price",nullable = false,precision = 12,scale = 2)
     private BigDecimal price;
     @Column(name="address",nullable = false,length = 255)
     private String address;
