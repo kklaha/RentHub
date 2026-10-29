@@ -17,10 +17,10 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/orders")
-public class OrderController {
+@RequestMapping("/api/v1/buyer")
+public class BuyerController {
     private final OrderService service;
-    @PostMapping("/{sellerId}")
+    @PostMapping
     public ResponseEntity<OrderResponseDto> createOrder(@Valid @RequestBody CreateOrderRequestDto dto,
                                                         @AuthenticationPrincipal User buyer){
         OrderResponseDto order=service.createOrder(dto,buyer.getId());
@@ -32,11 +32,17 @@ public class OrderController {
         OrderResponseDto canceled=service.cancelOrder(orderId,buyer.getId());
         return ResponseEntity.ok(canceled);
     }
-    @GetMapping("/buyer")
+    @GetMapping("/orders")
     public ResponseEntity<Page<OrderResponseDto>> getOrdersAsBuyer(@AuthenticationPrincipal User buyer,
                                                                    @PageableDefault(size=20) Pageable pageable){
         Page<OrderResponseDto> orders=service.getOrdersAsBuyer(buyer.getId(),pageable);
         return ResponseEntity.ok(orders);
+    }
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long orderId,
+                                                     @AuthenticationPrincipal User buyer){
+        OrderResponseDto order=service.getOrderAsBuyer(orderId,buyer.getId());
+        return ResponseEntity.ok(order);
     }
 
 

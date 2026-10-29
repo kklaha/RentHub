@@ -1,4 +1,8 @@
 package com.klaha.renthub.enums;
 
-public class DeliveryType {
+public enum DeliveryType {
+    SDEK,
+    YANDEX,
+    POST,
+    SELFPICKUP
 }
