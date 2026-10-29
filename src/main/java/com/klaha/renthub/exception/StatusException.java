@@ -1,7 +1,7 @@
 package com.klaha.renthub.exception;
 
-public class AlreadyConfirmedException extends RuntimeException {
-    public AlreadyConfirmedException(String message) {
+public class StatusException extends RuntimeException {
+    public StatusException(String message) {
         super(message);
     }
 }
