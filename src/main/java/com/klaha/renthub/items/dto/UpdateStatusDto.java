@@ -1,7 +1,7 @@
 package com.klaha.renthub.items.dto;
 
 
-import ch.qos.logback.core.status.Status;
+import com.klaha.renthub.enums.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,5 +12,5 @@ import lombok.Setter;
 @Setter
 @Builder
 public class UpdateStatusDto {
-    private Status status;
+    private ItemStatus status;
 }

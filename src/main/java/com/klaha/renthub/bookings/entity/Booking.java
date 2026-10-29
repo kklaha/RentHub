@@ -1,4 +1,4 @@
-/*package com.klaha.renthub.bookings.entity;
+package com.klaha.renthub.bookings.entity;
 
 
 import jakarta.persistence.*;
@@ -16,7 +16,6 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
-    @JoinColumn(name)
 }
 
- */
+

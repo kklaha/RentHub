@@ -1,11 +1,12 @@
 package com.klaha.renthub.items.dto;
 
 
+import com.klaha.renthub.enums.Category;
 import com.klaha.renthub.enums.ItemStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -15,13 +16,14 @@ import java.time.LocalDateTime;
 public class ItemResponseDto {
 
     private Long id;
+    private Long userId;
     private String itemName;
-    private Long categoryId;
+    private Category category;
     private BigDecimal price;
     private String address;
     private String description;
     private String city;
     private ItemStatus status;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
 }

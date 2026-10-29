@@ -1,7 +1,7 @@
 package com.klaha.renthub.items.dto;
 
 
-import com.klaha.renthub.categories.entity.Category;
+import com.klaha.renthub.enums.Category;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class CreateItemDto {
     @NotBlank(message = "Имя вещи не может быть пустым")
     private String itemName;
     @NotBlank(message = "Категория не может быть пустой")
-    private Long categoryId;
+    private Category category;
     private String description;
     @NotBlank(message = "У вещи должна быть цена ")
     private BigDecimal price;
