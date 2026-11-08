@@ -37,8 +37,7 @@ public class Order {
     private BigDecimal price;
     @Column(name="status",nullable = false)
     @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private OrderStatus status=OrderStatus.CREATED;
+    private OrderStatus status;
     @Column(name="delivery_type",length=32,nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default

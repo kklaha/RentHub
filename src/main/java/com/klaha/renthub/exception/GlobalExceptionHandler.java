@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
                 message(ex.getMessage()).timestamp(LocalDateTime.now()).build();
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
     }
-    @ExceptionHandler(BussinesException.class)
-    public ResponseEntity<ErrorResponseDto> handleBussinesException(BussinesException ex){
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponseDto> handleBussinesException(BusinessException ex){
         ErrorResponseDto error = ErrorResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).
                 error("Item already ordered").message(ex.getMessage()).
                 timestamp(LocalDateTime.now()).build();

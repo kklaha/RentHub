@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +41,6 @@ public class User implements UserDetails{
 
     @Column(name="last_name",nullable = false,length = 64)
     private String lastName;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false,length = 20)
     private Role role=Role.ROLE_USER;
