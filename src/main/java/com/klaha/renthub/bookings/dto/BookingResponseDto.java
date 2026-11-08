@@ -23,7 +23,7 @@ public class BookingResponseDto {
 
     public static BookingResponseDto from(Booking booking){
         return BookingResponseDto.builder().
-                id(booking.getBookingId()).renterId(booking.getRenter().getId()).
+                id(booking.getId()).renterId(booking.getRenter().getId()).
                 startTime(booking.getStartTime()).endTime(booking.getEndTime()).
                 status(booking.getStatus()).price(booking.getTotalPrice()).build();
     }

@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_id")
     private Item item;
@@ -31,8 +31,8 @@ public class Booking {
     @JoinColumn(name="renter_id")
     private User renter;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="rentprovider_id")
-    private User rentProvider;
+    @JoinColumn(name="provider_id")
+    private User provider;
     @Column(name="category")
     @Enumerated(EnumType.STRING)
     private Category category;

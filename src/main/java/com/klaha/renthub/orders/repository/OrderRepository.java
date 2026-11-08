@@ -25,7 +25,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
             """ 
                      UPDATE Order o 
                      set o.status=com.klaha.renthub.enums.OrderStatus.REJECTED 
-                     where o.itemId= :itemId and o.id<> :confirmedId 
+                     where o.item.id= :itemId and o.id<> :confirmedId 
                      and o.status <> com.klaha.renthub.enums.OrderStatus.CREATED""")
     int rejectOtherResponse(@Param("itemId") Long itemId,@Param("conrimedId") Long confrimedId);
 }

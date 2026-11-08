@@ -50,7 +50,7 @@ public class BookingService {
                 orElseThrow(()->new EntityNotFoundException("Пользователь не найден"));
         Booking booking= Booking.builder()
                 .item(item).renter(renter).
-                rentProvider(item.getUser()).category(item.getCategory()).
+                provider(item.getUser()).category(item.getCategory()).
                 startTime(dto.getStartTime()).endTime(dto.getEndTime()).status(BookingStatus.CREATED).
                 totalPrice(totalPrice(dto)).createdAt(OffsetDateTime.now()).build();
         Booking saved=bookingRepository.save(booking);
