@@ -5,7 +5,7 @@ import com.klaha.renthub.auth.entity.User;
 import com.klaha.renthub.auth.repository.UserRepository;
 import com.klaha.renthub.enums.ItemStatus;
 import com.klaha.renthub.enums.OrderStatus;
-import com.klaha.renthub.exception.BussinesException;
+import com.klaha.renthub.exception.BusinessException;
 import com.klaha.renthub.exception.ItemNotActiveException;
 import com.klaha.renthub.exception.StatusException;
 import com.klaha.renthub.items.entity.Item;
@@ -16,6 +16,7 @@ import com.klaha.renthub.orders.entity.Order;
 import com.klaha.renthub.orders.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -65,9 +68,11 @@ public class OrderService {
         try {
             orderRepository.saveAndFlush(order);
         } catch (DataIntegrityViolationException e) {
-            throw new BussinesException("На эту вещь уже принят другой заказ");
+            throw new BusinessException("На эту вещь уже принят другой заказ");
         }
-            return OrderResponseDto.from(order);
+        int rejected = orderRepository.rejectOtherResponse(order.getItem().getId(),order.getId());
+        log.info("Auto-rejected {} competing orders for item {}", rejected, order.getItem().getId());
+        return OrderResponseDto.from(order);
 
     }
     @Transactional
@@ -94,12 +99,12 @@ public class OrderService {
     }
     @Transactional(readOnly = true)
     public Page<OrderResponseDto> getOrdersAsBuyer(Long buyerId, Pageable pageable) {
-        Page<Order> orders=orderRepository.findByBuyer_Id(buyerId,pageable);
+        Page<Order> orders=orderRepository.findByBuyerId(buyerId,pageable);
         return orders.map(OrderResponseDto::from);
     }
     @Transactional(readOnly = true)
     public Page<OrderResponseDto> getOrdersAsSeller(Long sellerId,Pageable pageable) {
-       Page<Order> orders=orderRepository.findBySeller_Id(sellerId,pageable);
+       Page<Order> orders=orderRepository.findBySellerId(sellerId,pageable);
        return orders.map(OrderResponseDto::from);
     }
     @Transactional(readOnly = true)
@@ -114,4 +119,7 @@ public class OrderService {
                 orElseThrow(()->new EntityNotFoundException("Заказ не найден"));
         return OrderResponseDto.from(order);
     }
+
+
+
 }
