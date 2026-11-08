@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateBookingDto {
+public class CreateBookingRequestDto {
     @NotBlank(message = "Выберите объявление для брони")
     private Item item;
     @NotBlank(message = "Выберите дату начала")
