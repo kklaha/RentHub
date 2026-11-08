@@ -1,0 +1,1 @@
+alter table bookings add column rentprovider_id bigint references users(id) on delete cascade;
