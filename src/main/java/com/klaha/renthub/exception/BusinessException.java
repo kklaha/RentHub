@@ -1,7 +1,7 @@
 package com.klaha.renthub.exception;
 
-public class BussinesException extends RuntimeException {
-    public BussinesException(String message) {
+public class BusinessException extends RuntimeException {
+    public BusinessException(String message) {
         super(message);
     }
 }
